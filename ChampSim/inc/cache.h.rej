@@ -1,0 +1,17 @@
+diff a/inc/cache.h b/inc/cache.h	(rejected hunks)
+@@ -2,6 +2,7 @@
+ #define CACHE_H
+ 
+ #include "memory_class.h"
++#include <fstream>
+ 
+ // PAGE
+ extern uint32_t PAGE_TABLE_LATENCY, SWAP_LATENCY;
+@@ -112,6 +113,7 @@ class CACHE : public MEMORY {
+              roi_miss[NUM_CPUS][NUM_TYPES];
+ 
+     uint64_t total_miss_latency;
++    std::ofstream llc_access_trace;
+     
+     // constructor
+     CACHE(string v1, uint32_t v2, int v3, uint32_t v4, uint32_t v5, uint32_t v6, uint32_t v7, uint32_t v8) 

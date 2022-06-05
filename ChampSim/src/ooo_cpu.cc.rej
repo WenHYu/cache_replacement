@@ -1,0 +1,37 @@
+diff a/src/ooo_cpu.cc b/src/ooo_cpu.cc	(rejected hunks)
+@@ -30,14 +30,10 @@ void O3_CPU::read_from_trace()
+             if (!fread(&current_cloudsuite_instr, instr_size, 1, trace_file)) {
+                 // reached end of file for this trace
+                 cout << "*** Reached end of trace for Core: " << cpu << " Repeating trace: " << trace_string << endl; 
+-
+-                // close the trace file and re-open it
+                 pclose(trace_file);
+-                trace_file = popen(gunzip_command, "r");
+-                if (trace_file == NULL) {
+-                    cerr << endl << "*** CANNOT REOPEN TRACE FILE: " << trace_string << " ***" << endl;
+-                    assert(0);
+-                }
++
++                // Don't repeat the trace, otherwise train / test may overlap.
++                return;
+             } else { // successfully read the trace
+ 
+                 // copy the instruction into the performance model's instruction format
+@@ -147,14 +143,10 @@ void O3_CPU::read_from_trace()
+ 	      {
+                 // reached end of file for this trace
+                 cout << "*** Reached end of trace for Core: " << cpu << " Repeating trace: " << trace_string << endl; 
+-		
+-                // close the trace file and re-open it
+                 pclose(trace_file);
+-                trace_file = popen(gunzip_command, "r");
+-                if (trace_file == NULL) {
+-		  cerr << endl << "*** CANNOT REOPEN TRACE FILE: " << trace_string << " ***" << endl;
+-                    assert(0);
+-                }
++
++                // Don't repeat the trace, otherwise train / test may overlap.
++                return;
+             }
+ 	    else
+ 	      { // successfully read the trace

@@ -1,0 +1,16 @@
+
+*** ChampSim Multicore Out-of-Order Simulator ***
+
+Warmup Instructions: 0
+Simulation Instructions: 313000000000
+Number of CPUs: 1
+LLC sets: 2048
+LLC ways: 16
+Off-chip DRAM Size: 4096 MB Channels: 1 Width: 64-bit Data Rate: 3200 MT/s
+
+CPU 0 runs /home/yuw/cs259/cache_replacement/ChampSim/astar_23B.trace.xz
+CPU 0 Bimodal branch predictor
+
+Warmup complete CPU 0 instructions: 2 cycles: 9 (Simulation time: 0 hr 0 min 0 sec) 
+
+Caught signal: 2

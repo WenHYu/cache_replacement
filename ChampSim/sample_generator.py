@@ -79,7 +79,7 @@ def generate_train_samples(traces_pd, cache_size):
 
 
 
-df = pd.read_csv('/Users/wenhaoyu/Documents/Project/cache_replacement/ChampSim/llc_access_trace.csv', sep=',')
+df = pd.read_csv('./llc_access_trace.csv', sep=',')
 df.columns = ['PC','Address']
 df.head()
 

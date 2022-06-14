@@ -16,7 +16,7 @@ def generate_train_samples(traces_pd, cache_size):
         trace = row['Address']
         belady[trace].append(i)   
 
-
+    MissDistance = 0
     for i, row in tqdm(traces_pd.iterrows(), total=traces_pd.shape[0], leave = False):
         trace = row['Address']
          # Pop the visit position
@@ -27,6 +27,7 @@ def generate_train_samples(traces_pd, cache_size):
             # update the lfu 
             lru_recency.remove(trace)
             lru_recency.append(trace)
+            MissDistance += 1
         elif len(cache) < cache_size:
             cache.add(trace)
             # update the lfu
@@ -47,7 +48,6 @@ def generate_train_samples(traces_pd, cache_size):
             maxAccessPosition = -1
             valid_strategies = np.zeros((3,), dtype=int)
             
-            is_non_recurrent_detected = 0 
             for j, candidate in enumerate(candidates):
                 # this is the last time a block will ever be used
                 # test = belady[candidate][0]
@@ -67,8 +67,11 @@ def generate_train_samples(traces_pd, cache_size):
                     else:
                         valid_strategies[j] = 0
 
-            x.append(row)
+            s1 = pd.Series([MissDistance], index = ['MissDistance'])
+            s2 = pd.concat([row, s1])
+            x.append(s2)
             y = np.vstack((y, valid_strategies))
+            MissDistance = 0 
 
             # update the cache
             cache.remove(evicted_candidate)
@@ -93,6 +96,5 @@ df.head()
 
 x, y = generate_train_samples(df,  2048)
 print(x[:5])
-
 np.save('x', x)
 np.save('y', y)
